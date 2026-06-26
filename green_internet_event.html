@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, interactive-widget=resizes-content"
+    />
+    <title>Green Internet — Fast. Fair. 100% Renewable.</title>
+
+    <!-- Load the Stubber webchat custom element -->
+    <script
+      type="module"
+      src="https://webchat.notifications.stubber.com/v2/client/index.js"
+    ></script>
+
+    <style>
+      :root {
+        --gi-green: #16a34a;
+        --gi-green-dark: #15803d;
+        --gi-ink: #0b2e1b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: var(--gi-ink);
+      }
+
+      body {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        background: radial-gradient(1200px 600px at 50% -10%, #d1fae5 0%, transparent 60%),
+          linear-gradient(160deg, #f0fdf4 0%, #ecfdf5 40%, #e7f9ef 100%);
+      }
+
+      /* Top bar / brand */
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 32px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: -0.02em;
+      }
+
+      .brand .leaf {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: var(--gi-green);
+        color: #fff;
+        font-size: 18px;
+        box-shadow: 0 6px 16px -6px rgba(22, 163, 74, 0.7);
+      }
+
+      nav a {
+        margin-left: 22px;
+        text-decoration: none;
+        color: #14532d;
+        font-weight: 600;
+        font-size: 14px;
+        opacity: 0.8;
+      }
+      nav a:hover {
+        opacity: 1;
+      }
+
+      /* Centered hero */
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(22, 163, 74, 0.12);
+        color: var(--gi-green-dark);
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 22px;
+      }
+
+      h1 {
+        margin: 0 0 14px;
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+
+      h1 .accent {
+        color: var(--gi-green);
+      }
+
+      .subtitle {
+        margin: 0 auto 38px;
+        max-width: 560px;
+        font-size: 18px;
+        line-height: 1.5;
+        color: #2f4a3a;
+        opacity: 0.9;
+      }
+
+      /* The opening input bar (dispatches a custom event to open the chat) */
+      .open-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: min(620px, 92vw);
+        padding: 8px 8px 8px 22px;
+        background: #ffffff;
+        border: 2px solid rgba(22, 163, 74, 0.25);
+        border-radius: 999px;
+        box-shadow: 0 24px 60px -24px rgba(22, 163, 74, 0.55);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .open-bar:focus-within {
+        border-color: var(--gi-green);
+        box-shadow: 0 24px 60px -20px rgba(22, 163, 74, 0.7);
+      }
+
+      .open-bar input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 17px;
+        color: var(--gi-ink);
+        padding: 14px 0;
+      }
+      .open-bar input::placeholder {
+        color: #6b8a78;
+      }
+
+      .open-bar button {
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        border: none;
+        border-radius: 999px;
+        background: var(--gi-green);
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.1s ease;
+      }
+      .open-bar button:hover {
+        background: var(--gi-green-dark);
+      }
+      .open-bar button:active {
+        transform: scale(0.94);
+      }
+      .open-bar button svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      .hint {
+        margin-top: 18px;
+        font-size: 13px;
+        color: #4b6b58;
+      }
+
+      /* Quick-start chips that also open the chat via the same event */
+      .chips {
+        margin-top: 26px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .chip {
+        padding: 9px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(22, 163, 74, 0.3);
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--gi-green-dark);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .chip:hover {
+        background: #fff;
+        border-color: var(--gi-green);
+      }
+
+      footer {
+        padding: 20px 32px;
+        text-align: center;
+        font-size: 13px;
+        color: #4b6b58;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="brand">
+        <span class="leaf">🌱</span>
+        Green Internet
+      </div>
+      <nav>
+        <a href="#">Plans</a>
+        <a href="#">Coverage</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Support</a>
+      </nav>
+    </header>
+
+    <main>
+      <span class="eyebrow">100% renewable broadband</span>
+      <h1>Fast, fair internet that's<br /><span class="accent">good for the planet.</span></h1>
+      <p class="subtitle">
+        Gigabit speeds powered entirely by wind and solar. Ask us anything — coverage, pricing, or
+        switching over — and we'll get you connected.
+      </p>
+
+      <!--
+      OPENING BAR — EVENT IMPLEMENTATION
+      This bar uses a normal id, so the widget does NOT auto-bind to it.
+      Instead the page dispatches the "stubber_webchat_chat_open" custom event
+      with detail.data.message — the widget listens for it, opens, connects,
+      and sends the message.
+    -->
+      <form id="green_internet_open_bar" class="open-bar">
+        <input
+          name="message"
+          type="text"
+          autocomplete="off"
+          placeholder="Ask about plans, coverage, or going green…"
+        />
+        <button type="submit" aria-label="Start chat">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M4 12h15M13 6l6 6-6 6"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </form>
+
+      <div class="chips">
+        <button class="chip" data-message="What plans are available in my area?">
+          Check my area
+        </button>
+        <button class="chip" data-message="How is your internet 100% renewable?">Why green?</button>
+        <button class="chip" data-message="I want to switch from another provider.">
+          Switch to Green
+        </button>
+      </div>
+
+      <p class="hint">Press Enter to start chatting with the Green Internet team.</p>
+    </main>
+
+    <footer>🌍 Green Internet — every connection planted as renewable energy. © 2026</footer>
+
+    <!--
+    Embed the widget (no built-in opening button — we drive it via events).
+  -->
+    <stubber-webchat
+      pass_through_data="{'source':'green_internet_event'}"
+      profile_uuid="3977b424-16b8-4495-9ef9-ab0171e3f2d0"
+      branch="draft"
+    ></stubber-webchat>
+
+    <script>
+      // Opens the webchat by dispatching the custom event the widget listens for.
+      // Passing detail.data.message makes the widget send that text on open.
+      function openChat(message) {
+        window.dispatchEvent(
+          new CustomEvent("stubber_webchat_chat_open", {
+            detail: { data: { message: message || "" } },
+          })
+        );
+      }
+
+      window.onload = function () {
+        // Center bar: open chat with the typed message.
+        const bar = document.getElementById("green_internet_open_bar");
+        bar.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const message = bar.querySelector("input[name='message']").value.trim();
+          openChat(message);
+        });
+
+        // Quick-start chips: open chat with a preset message.
+        document.querySelectorAll(".chip").forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            openChat(chip.dataset.message);
+          });
+        });
+      };
+    </script>
+  </body>
+</html>
